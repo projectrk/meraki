@@ -1,0 +1,14 @@
+// Meraki to Google App Script dump to Google Sheets
+
+function doPost(e) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var json = JSON.parse(e.postData.contents);
+  sheet.appendRow([
+    new Date(),
+    json.alertType || '',
+    json.networkName || '',
+    json.deviceName || '',
+    json.alertData ? JSON.stringify(json.alertData) : ''
+  ]);
+  return ContentService.createTextOutput("OK");
+}
